@@ -48,6 +48,11 @@ namespace HFSExtract {
             var marshal = new CursoredMemoryMarshal(buffer.ToArray());
             for (var i = 0; i < Header.Count; ++i) {
                 var resourceNameLength = marshal.Read<int>();
+                Console.WriteLine(resourceNameLength);
+                if (resourceNameLength <= 0 || resourceNameLength > 5000) {
+                    Console.WriteLine("Out of range, skip");
+                    return;
+                }
                 var resourceName = Encoding.Unicode.GetString(marshal.Copy(resourceNameLength * 2).Span);
                 var file = marshal.Read<HFSFile>();
                 var hash = marshal.Copy(16).ToArray();

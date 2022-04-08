@@ -14,6 +14,7 @@ namespace HFSExtract.CLI {
             var output = args[1];
             
             foreach (var file in Directory.GetFiles(args[0], "*.hfs", SearchOption.TopDirectoryOnly)) {
+                Console.WriteLine(file);
                 using var hfs = new HFSArchive(File.OpenRead(file), Path.GetFileName(file));
                 foreach (var filename in hfs.Files.Keys) {
                     var target = Path.Combine(output, filename);
